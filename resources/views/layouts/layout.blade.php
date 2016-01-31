@@ -19,10 +19,6 @@
     <!-- Bootstrap Material Design -->
     <link href="bootstrap-material-design/dist/css/bootstrap-material-design.css" rel="stylesheet">
     <link href="bootstrap-material-design/dist/css/ripples.min.css" rel="stylesheet">
-    <!-- React -->
-    <script src="react/dist/react.js"></script>
-    <script src="react-dom/dist/react-dom.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.23/browser.min.js"></script>
   </head>
   <body>
     <h1>Hello, world!</h1>
