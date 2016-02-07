@@ -47,7 +47,12 @@
             <a class="navbar-brand" id="brand" href="#">Meetme</a>
           </div>
           <ul class="nav navbar-nav navbar-right" id="right">
-            <li><a href="#" id="login">Login</a></li>
+            @if (session('provider_id'))
+              <li><a href="javascript:void(0)" id="login">Welcome {{ session('name') }}</a></li>
+              <li><a href="/logout" id="login">Logout</a></li>
+            @else
+              <li><a href="/auth/facebook" id="login">Login</a></li>
+            @endif
           </ul>
         </div>
       </nav>

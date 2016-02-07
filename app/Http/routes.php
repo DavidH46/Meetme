@@ -26,3 +26,8 @@ Route::get('/test2', function () {
 Route::get('/main', function () {
     return view('main');
 });
+
+//Socialite groups
+Route::get('auth/facebook', 'Auth\AuthController@redirectToProvider');
+Route::get('auth/callback', 'Auth\AuthController@handleProviderCallback');
+Route::get('/logout','Auth\AuthController@logout');

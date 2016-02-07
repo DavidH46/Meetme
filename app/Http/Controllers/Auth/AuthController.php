@@ -7,6 +7,9 @@ use Validator;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
+use Socialite;
+use Auth;
+use Session;
 
 class AuthController extends Controller
 {
@@ -61,5 +64,47 @@ class AuthController extends Controller
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
         ]);
+    }
+    //Socialite Test
+    /**
+     * Redirect the user to the FaceBook authentication page.
+     *
+     * @return Response
+     */
+    public function redirectToProvider()
+    {
+        return Socialite::driver('facebook')->redirect();
+    }
+
+    /**
+     * Obtain the user information from FaceBook.
+     *
+     * @return Response
+     */
+    public function handleProviderCallback()
+    {
+        $user = Socialite::driver('facebook')->user();
+        // create in database if null
+        $save = User::firstOrNew(array(
+          'name' => $user->getName(),
+          'username' => $user->getNickname(),
+          'email' => $user->getEmail(),
+          'avatar' => $user->getAvatar(),
+          'provider' => 'facebook',
+          'provider_id' => $user->getId(),
+
+        ));
+        $save->save();
+        //put id and name into session
+        Session::put('provider_id', $user->getId());
+        Session::put('name',$user->getName());
+        return redirect('/main');
+    }
+
+    public function logout()
+    {
+        //clear session
+        Session::flush();
+        return redirect('/main');
     }
 }
